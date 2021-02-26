@@ -4,12 +4,11 @@ env:
   node: true
 extends:
   - 'airbnb-base'
-  - 'eslint:recommended'
+  - plugin:jest/recommended'
 parserOptions:
   ecmaVersion: 12
   sourceType: module
 rules:
-  no-console: 0
   import/extensions: 0
   indent:
     - error
