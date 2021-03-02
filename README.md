@@ -1,3 +1,7 @@
+## RSS reader
+
+[RSS reader on vercel.com](https://frontend-project-lvl3-smorodinavik.vercel.app)
+
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/SmorodinaVik/frontend-project-lvl3/workflows/hexlet-check/badge.svg)](https://github.com/SmorodinaVik/frontend-project-lvl3/actions)
 [![Linter](https://github.com/SmorodinaVik/frontend-project-lvl3/actions/workflows/linter.yml/badge.svg)](https://github.com/SmorodinaVik/frontend-project-lvl3/actions/workflows/linter.yml)
