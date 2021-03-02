@@ -1,23 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="shortcut icon" href="favicon.ico">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>RSS Reader</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <title>RSS aggregator</title>
   </head>
-  <body>
-    <div class="container">
-        <h3>RSS form</h3>
-        <form>
-            <div class="form-group row">
-                <div class="col">
-                    <input name="inputUrl" type="text" class="form-control" id="inputUrl" placeholder="Enter URL to add RSS feed">
-                </div>
-                <div class="col align-self-end">
-                    <button type="submit" class="btn btn-primary">Add feed</button>
+  <body class="d-flex flex-column min-vh-100">
+    <main class="flex-grow-1">
+        <section class="container-fluid bg-secondary p-5">
+            <div class="row">
+                <div class="col-md-10 col-lg-8 mx-auto text-white">
+                    <h1 class="display-4">RSS aggregator</h1>
+                    <form action="" class="rss-form">
+                        <div class="form-row">
+                            <div class="col">
+                                <input autofocus="" required="" name="url" aria-label="url" class="form-control form-control-lg w-100" placeholder="Enter URL to add RSS feed">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" aria-label="add" class="btn btn-lg btn-primary px-sm-5">Add feed</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="feedback"></div>
                 </div>
             </div>
-        </form>
-    </div>
+        </section>
+        <section class="container-fluid p-5">
+            <div class="row">
+                <div class="col-md-10 col-lg-8 mx-auto feeds">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-lg-8 mx-auto posts">
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer border-top py-3 mt-5">
+        <div class="container-xl">
+            <div class="text-center">
+                created by 
+                <a href="https://github.com/SmorodinaVik" target="_blank">Viktor Smorordina</a>
+            </div>
+        </div>
+    </footer>
   </body>
 </html>

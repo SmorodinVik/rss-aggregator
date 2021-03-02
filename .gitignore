@@ -3,5 +3,5 @@ coverage
 dist
 .vscode
 .DS_Store
-
+unused.html
 .vercel
