@@ -6,12 +6,17 @@
   </head>
   <body>
     <div class="container">
-        <h2>RSS form</h2>
+        <h3>RSS form</h3>
         <form>
-            <input id="inputURL" required type="text" class="form-control" placeholder="input URL" name="inputURL">
-            <input type="submit" class="btn btn-primary" value="Add feed">
+            <div class="form-group row">
+                <div class="col">
+                    <input name="inputUrl" type="text" class="form-control" id="inputUrl" placeholder="Enter URL to add RSS feed">
+                </div>
+                <div class="col align-self-end">
+                    <button type="submit" class="btn btn-primary">Add feed</button>
+                </div>
+            </div>
         </form>
     </div>
-    <div id="test">Hello</div>
   </body>
 </html>
