@@ -1,3 +1,3 @@
 export default () => {
-  console.log('ehu!');
+  console.log(document.querySelector('.feeds'));
 };

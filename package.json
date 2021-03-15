@@ -46,13 +46,17 @@
     "workbox-webpack-plugin": "^6.1.1"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
+    "fs": "^0.0.1-security",
     "html-webpack-plugin": "^5.2.0",
     "jquery": "^3.5.1",
     "make": "^0.0.0",
+    "on-change": "^2.2.3",
     "popper.js": "^1.16.1",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "yup": "^0.32.9"
   }
 }
