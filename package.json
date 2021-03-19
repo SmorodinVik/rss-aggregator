@@ -52,6 +52,7 @@
     "eslint-plugin-import": "^2.22.1",
     "fs": "^0.0.1-security",
     "html-webpack-plugin": "^5.2.0",
+    "i18next": "^19.9.2",
     "jquery": "^3.5.1",
     "make": "^0.0.0",
     "on-change": "^2.2.3",

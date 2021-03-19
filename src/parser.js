@@ -2,7 +2,7 @@ export default (html) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, 'text/xml');
   if (!doc.querySelector('rss')) {
-    throw new Error('The resource does not contain a valid RSS');
+    throw new Error('errors.noRSSFind');
   }
   const feedTitle = doc.querySelector('title').textContent;
   const feedDescription = doc.querySelector('description').textContent;

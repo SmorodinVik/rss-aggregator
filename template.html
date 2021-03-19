@@ -7,7 +7,14 @@
     <title>RSS aggregator</title>
   </head>
   <body class="d-flex flex-column min-vh-100">
-    <main class="flex-grow-1">
+      <main class="flex-grow-1">
+          <section class="container-fluid bg-dark">
+              <div id="lngBtns" class="d-flex">
+                  <div class="p-1"><a href="#" id="ru" class="text-white font-weight-normal text-muted">Русский</a></div>
+                  <div class="p-1"><a href="#" id="en" class="text-white font-weight-normal">English</a></div>
+                  <div class="p-1"><a href="#" id="de" class="text-white font-weight-normal text-muted">Deutsch</a></div>
+              </div>
+           </section>
         <section class="container-fluid bg-dark p-5">
             <div class="row">
                 <div class="col-md-10 col-lg-8 mx-auto text-white">
@@ -39,9 +46,7 @@
     </main>
     <footer class="footer border-top py-3 mt-5">
         <div class="container-xl">
-            <div class="text-center">
-                created by 
-                <a href="https://github.com/SmorodinaVik" target="_blank">Viktor Smorordina</a>
+            <div id="author" class="text-center">
             </div>
         </div>
     </footer>
