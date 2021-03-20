@@ -1,13 +1,27 @@
 import axios from 'axios';
 import * as yup from 'yup';
 import i18n from 'i18next';
+import * as _ from 'lodash';
 
 import initView from './view.js';
 import parser from './parser.js';
 import resources from './locales/resources.js';
 
-const loadRSS = (path) => axios.get(`https://hexlet-allorigins.herokuapp.com/get?url=${encodeURIComponent(path)}`)
+const loadRSS = (path) => axios.get(`https://hexlet-allorigins.herokuapp.com/get?url=${encodeURIComponent(path)}&timestamp=${new Date().getTime()}`)
   .then((response) => response.data.contents);
+
+const loadNewPosts = (urls) => {
+  const promises = urls.map((url) => loadRSS(url)
+    .then((value) => parser(value).posts)
+    .catch(() => null));
+  return Promise.all(promises)
+    .then((result) => result.filter((val) => val !== null).flat());
+};
+
+const filterNewPosts = (oldPosts, newPosts) => {
+  const titleList = oldPosts.map(({ title }) => title);
+  return newPosts.filter(({ title }) => !_.includes(titleList, title));
+};
 
 const validate = (value, urls) => {
   const schema = yup
@@ -92,7 +106,7 @@ const app = () => {
         const { feed, posts } = parser(data);
         watched.feeds = [feed, ...watched.feeds];
         watched.posts = [...posts, ...watched.posts];
-        watched.urls = [rssLink, ...watched.urls];
+        watched.urls = [...watched.urls, rssLink];
         watched.form.status = 'filling';
         watched.form.submitCount += 1;
       })
@@ -101,6 +115,17 @@ const app = () => {
         watched.form.status = 'failed';
       });
   });
+
+  const fn = () => {
+    loadNewPosts(watched.urls)
+      .then((newPosts) => filterNewPosts(watched.posts, newPosts))
+      .then((filteredPosts) => {
+        watched.posts = [...filteredPosts, ...watched.posts];
+        setTimeout(fn, 5000);
+      });
+  };
+
+  setTimeout(fn, 5000);
 };
 
 export default app;

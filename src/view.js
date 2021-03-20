@@ -80,6 +80,8 @@ const buildPostElement = (post) => {
 };
 
 const renderPosts = (posts, elements, i18nInstance) => {
+  if (posts.length === 0) return;
+
   elements.postsBox.textContent = '';
 
   const h2El = document.createElement('h2');
