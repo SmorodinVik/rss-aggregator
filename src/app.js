@@ -66,7 +66,6 @@ const addPostElementAction = (watched, elements) => {
   const buttons = elements.postsBox.querySelectorAll('button');
   buttons.forEach((button) => {
     button.addEventListener('click', (e) => {
-      e.stopPropagation();
       const id = Number(e.target.dataset.id);
       watched.posts.postList = makePostViewed(watched.posts.postList, id);
       watched.modals.postId = id;
@@ -166,7 +165,7 @@ const app = () => {
   });
 
   document.addEventListener('click', (e) => {
-    if (watched.modals.open && e.target !== elements.modals) {
+    if (watched.modals.open && e.target === elements.modal) {
       watched.modals.open = false;
     }
   });
