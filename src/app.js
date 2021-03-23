@@ -114,7 +114,7 @@ const app = () => {
 
   const watched = initView(state, elements, i18nInstance);
 
-  const defaultLanguage = 'en';
+  const defaultLanguage = 'ru';
 
   i18nInstance.init({
     lng: defaultLanguage,
