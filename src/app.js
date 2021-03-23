@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import axios from 'axios';
 import * as yup from 'yup';
 import i18n from 'i18next';
@@ -23,6 +24,13 @@ const filterNewPosts = (oldPosts, newPosts) => {
   return newPosts.filter(({ title }) => !_.includes(titleList, title));
 };
 
+const addId = (state, posts) => posts
+  .map((post) => {
+    const id = state.posts.idCounter;
+    state.posts.idCounter += 1;
+    return { id, ...post };
+  });
+
 const validate = (value, urls) => {
   const schema = yup
     .string()
@@ -38,22 +46,60 @@ const validate = (value, urls) => {
   }
 };
 
+const makePostViewed = (posts, id) => posts.map((post) => {
+  if (post.id === id) {
+    return { ...post, viewed: true };
+  }
+  return post;
+});
+
+const addPostElementAction = (watched, elements) => {
+  const aEls = elements.postsBox.querySelectorAll('a');
+  aEls.forEach((el) => {
+    el.addEventListener('click', (e) => {
+      const id = Number(e.target.dataset.id);
+      watched.posts.postList = makePostViewed(watched.posts.postList, id);
+      addPostElementAction(watched, elements);
+    });
+  });
+
+  const buttons = elements.postsBox.querySelectorAll('button');
+  buttons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = Number(e.target.dataset.id);
+      watched.posts.postList = makePostViewed(watched.posts.postList, id);
+      watched.modals.postId = id;
+      watched.modals.open = true;
+      addPostElementAction(watched, elements);
+    });
+  });
+};
+
 const app = () => {
   const state = {
     lng: null,
     urls: [],
     feeds: [],
-    posts: [],
-    error: null,
+    posts: {
+      idCounter: 0,
+      postList: [],
+    },
+    modals: {
+      open: false,
+      postId: null,
+    },
+    errors: [],
     form: {
       status: 'filling',
       feedback: null,
       submitCount: 0,
-      error: null,
+      errors: [],
     },
   };
 
   const elements = {
+    modal: document.querySelector('#modal'),
     lngBtns: document.querySelectorAll('#lngBtns > div > a'),
     title: document.querySelector('h1'),
     form: document.querySelector('#rss-form'),
@@ -87,12 +133,12 @@ const app = () => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-    const rssLink = formData.get('url');
+    const rssLink = formData.get('url').trim();
 
     const error = validate(rssLink, watched.urls);
 
     if (error) {
-      watched.form.error = error;
+      watched.form.errors = [error, ...watched.form.errors];
       watched.form.status = 'incorrect';
       return;
     }
@@ -104,23 +150,49 @@ const app = () => {
       .then((data) => {
         watched.form.feedback = 'form.luckyFeedback';
         const { feed, posts } = parser(data);
+        const postsWithId = addId(watched, posts);
         watched.feeds = [feed, ...watched.feeds];
-        watched.posts = [...posts, ...watched.posts];
+        watched.posts.postList = [...postsWithId, ...watched.posts.postList];
+        addPostElementAction(watched, elements);
         watched.urls = [...watched.urls, rssLink];
         watched.form.status = 'filling';
         watched.form.submitCount += 1;
       })
       .catch((err) => {
-        watched.error = err.message === 'Network Error' ? 'errors.networkError' : err.message;
+        const errorMessage = err.message === 'Network Error' ? 'errors.networkError' : err.message;
+        watched.errors = [errorMessage, ...watched.errors];
         watched.form.status = 'failed';
       });
   });
 
+  document.addEventListener('click', (e) => {
+    if (watched.modals.open && e.target !== elements.modals) {
+      watched.modals.open = false;
+    }
+  });
+
+  const closeModalElements = [
+    elements.modal.querySelector('.modal-footer > button'),
+    elements.modal.querySelector('.modal-header > button'),
+  ];
+
+  closeModalElements.forEach((el) => {
+    el.addEventListener('click', () => {
+      if (watched.modals.open) {
+        watched.modals.open = false;
+      }
+    });
+  });
+
   const fn = () => {
     loadNewPosts(watched.urls)
-      .then((newPosts) => filterNewPosts(watched.posts, newPosts))
-      .then((filteredPosts) => {
-        watched.posts = [...filteredPosts, ...watched.posts];
+      .then((newPosts) => filterNewPosts(watched.posts.postList, newPosts))
+      .then((filteredPosts) => addId(watched, filteredPosts))
+      .then((postsWithId) => {
+        if (postsWithId.length !== 0) {
+          watched.posts.postList = [...postsWithId, ...watched.posts.postList];
+          addPostElementAction(watched, elements);
+        }
         setTimeout(fn, 5000);
       });
   };

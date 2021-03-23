@@ -5,6 +5,11 @@ export default {
     posts: 'Posts',
     createdBy: 'gemacht von',
     author: 'Wiktor Smorodina',
+    modal: {
+      viewBtn: 'Anschauen',
+      readMore: 'Weiter lesen',
+      closeBtn: 'Zumachen',
+    },
     errors: {
       networkError: 'Network Fehler',
       noRSSFind: 'Ressurs hat kein RSS',

@@ -21,6 +21,17 @@ const renderTexts = (elements, i18nInstance) => {
   elements.author.innerHTML = `
     ${i18nInstance.t('createdBy')} <a href="https://github.com/SmorodinaVik" target="_blank">${i18nInstance.t('author')}</a>
   `;
+
+  const postBtns = elements.postsBox.querySelectorAll('.btn-sm');
+  postBtns.forEach((btn) => {
+    btn.textContent = i18nInstance.t('modal.viewBtn');
+  });
+
+  const readMoreBtn = elements.modal.querySelector('.full-article');
+  readMoreBtn.textContent = i18nInstance.t('modal.readMore');
+
+  const closeModalBtn = elements.modal.querySelector('.modal-footer > button');
+  closeModalBtn.textContent = i18nInstance.t('modal.closeBtn');
 };
 
 const renderLngChange = (state, elements, i18nInstance) => {
@@ -64,18 +75,28 @@ const renderFeeds = (feeds, elements, i18nInstance) => {
   elements.feedsBox.append(h2El, ulEl);
 };
 
-const buildPostElement = (post) => {
+const buildPostElement = (post, i18nInstance) => {
   const liEl = document.createElement('li');
   liEl.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start');
 
   const aEl = document.createElement('a');
-  aEl.classList.add('font-weigth-normal');
   aEl.href = post.link;
+  const className = post.viewed ? 'font-weight-normal' : 'font-weight-bold';
+  aEl.classList.add(className);
   aEl.target = '_blank';
   aEl.rel = 'noopener noreferrer';
+  aEl.dataset.id = post.id;
   aEl.textContent = post.title;
 
-  liEl.append(aEl);
+  const btnEl = document.createElement('button');
+  btnEl.type = 'button';
+  btnEl.classList.add('btn', 'btn-primary', 'btn-sm');
+  btnEl.dataset.id = post.id;
+  btnEl.dataset.toggle = 'modal';
+  btnEl.dataset.target = '#modal';
+  btnEl.textContent = i18nInstance.t('modal.viewBtn');
+
+  liEl.append(aEl, btnEl);
   return liEl;
 };
 
@@ -90,7 +111,7 @@ const renderPosts = (posts, elements, i18nInstance) => {
   const ulEl = document.createElement('ul');
   ulEl.classList.add('list-group');
 
-  const builtPosts = posts.map(buildPostElement);
+  const builtPosts = posts.map((post) => buildPostElement(post, i18nInstance));
   ulEl.append(...builtPosts);
 
   elements.postsBox.append(h2El, ulEl);
@@ -135,13 +156,48 @@ const renderFeedback = (form, elements, i18nInstance) => {
 };
 
 const renderFormError = (form, elements, i18nInstance) => {
-  elements.feedback.textContent = i18nInstance.t(form.error);
-  elements.feedback.dataset.i18n = form.error;
+  const errorMessage = form.errors[0];
+  elements.feedback.textContent = i18nInstance.t(errorMessage);
+  elements.feedback.dataset.i18n = errorMessage;
 };
 
-const renderAppError = (error, elements, i18nInstance) => {
-  elements.feedback.textContent = i18nInstance.t(error);
-  elements.feedback.dataset.i18n = error;
+const renderAppError = (errors, elements, i18nInstance) => {
+  const errorMessage = errors[0];
+  elements.feedback.textContent = i18nInstance.t(errorMessage);
+  elements.feedback.dataset.i18n = errorMessage;
+};
+
+const renderModal = (state, elements) => {
+  const { open, postId } = state.modals;
+
+  if (open) {
+    const [post] = state.posts.postList
+      .filter(({ id }) => postId === id);
+
+    const title = elements.modal.querySelector('.modal-title');
+    title.textContent = post.title;
+
+    const body = elements.modal.querySelector('.modal-body');
+    body.textContent = post.description;
+
+    const readMoreBtn = elements.modal.querySelector('.full-article');
+    readMoreBtn.href = post.link;
+
+    elements.modal.classList.add('show');
+    elements.modal.style = 'display: block;';
+    elements.modal.role = 'dialog';
+
+    document.body.classList.add('modal-open');
+    const divEl = document.createElement('div');
+    divEl.classList.add('modal-backdrop', 'fade', 'show');
+    document.body.append(divEl);
+  } else {
+    elements.modal.classList.remove('show');
+    document.body.classList.remove('modal-open');
+    elements.modal.style = 'display: none;';
+    const el = document.querySelector('.modal-backdrop');
+    el.remove();
+  }
 };
 
 const initView = (state, elements, i18nInstance) => {
@@ -150,12 +206,13 @@ const initView = (state, elements, i18nInstance) => {
   const mapping = {
     lng: () => renderLngChange(state, elements, i18nInstance),
     feeds: () => renderFeeds(state.feeds, elements, i18nInstance),
-    posts: () => renderPosts(state.posts, elements, i18nInstance),
-    error: () => renderAppError(state.error, elements, i18nInstance),
+    'posts.postList': () => renderPosts(state.posts.postList, elements, i18nInstance),
+    errors: () => renderAppError(state.errors, elements, i18nInstance),
+    'modals.open': () => renderModal(state, elements),
     'form.status': () => renderForm(state.form, elements),
     'form.feedback': () => renderFeedback(state.form, elements, i18nInstance),
     'form.submitCount': () => elements.input.focus(),
-    'form.error': () => renderFormError(state.form, elements, i18nInstance),
+    'form.errors': () => renderFormError(state.form, elements, i18nInstance),
   };
 
   const watchedState = onChange(state, (path) => {

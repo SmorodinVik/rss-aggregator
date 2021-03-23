@@ -5,6 +5,11 @@ export default {
     posts: 'Posts',
     createdBy: 'created by',
     author: 'Viktor Smorodina',
+    modal: {
+      viewBtn: 'View',
+      readMore: 'Read more',
+      closeBtn: 'Close',
+    },
     errors: {
       networkError: 'Network error',
       noRSSFind: 'The resource does not contain a valid RSS',

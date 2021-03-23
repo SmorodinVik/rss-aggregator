@@ -5,6 +5,11 @@ export default {
     posts: 'Посты',
     createdBy: 'автор',
     author: 'Виктор Смородина',
+    modal: {
+      viewBtn: 'Просмотр',
+      readMore: 'Читать полностью',
+      closeBtn: 'Закрыть',
+    },
     errors: {
       networkError: 'Ошибка сети',
       noRSSFind: 'Ресурс не содержит валидный RSS',
