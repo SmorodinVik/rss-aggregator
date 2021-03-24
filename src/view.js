@@ -121,7 +121,7 @@ const renderForm = (form, elements) => {
   switch (form.status) {
   case 'filling':
     elements.submitBtn.removeAttribute('disabled');
-    elements.input.removeAttribute('disabled');
+    elements.input.removeAttribute('readonly');
     elements.input.classList.remove('is-invalid');
     elements.input.value = '';
     elements.feedback.classList.remove('text-danger');
@@ -135,12 +135,12 @@ const renderForm = (form, elements) => {
 
   case 'loading':
     elements.submitBtn.setAttribute('disabled', true);
-    elements.input.setAttribute('disabled', true);
+    elements.input.setAttribute('readonly', true);
     break;
 
   case 'failed':
     elements.submitBtn.removeAttribute('disabled');
-    elements.input.removeAttribute('disabled');
+    elements.input.removeAttribute('readonly');
     elements.feedback.classList.add('text-danger');
     elements.input.classList.remove('is-invalid');
     break;
