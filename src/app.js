@@ -158,7 +158,8 @@ const app = () => {
         watched.form.submitCount += 1;
       })
       .catch((err) => {
-        const errorMessage = err.message === 'Network Error' ? 'errors.networkError' : err.message;
+        const networkErrors = ['Network Error', 'no internet'];
+        const errorMessage = _.includes(networkErrors, err.message) ? 'errors.networkError' : err.message;
         watched.errors = [errorMessage, ...watched.errors];
         watched.form.status = 'failed';
       });
