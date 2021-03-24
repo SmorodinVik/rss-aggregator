@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable no-param-reassign */
 import onChange from 'on-change';
 
@@ -119,34 +120,34 @@ const renderPosts = (posts, elements, i18nInstance) => {
 
 const renderForm = (form, elements) => {
   switch (form.status) {
-  case 'filling':
-    elements.submitBtn.removeAttribute('disabled');
-    elements.input.removeAttribute('readonly');
-    elements.input.classList.remove('is-invalid');
-    elements.input.value = '';
-    elements.feedback.classList.remove('text-danger');
-    elements.feedback.classList.add('text-success');
-    break;
+    case 'filling':
+      elements.submitBtn.removeAttribute('disabled');
+      elements.input.removeAttribute('readonly');
+      elements.input.classList.remove('is-invalid');
+      elements.input.value = '';
+      elements.feedback.classList.remove('text-danger');
+      elements.feedback.classList.add('text-success');
+      break;
 
-  case 'incorrect':
-    elements.input.classList.add('is-invalid');
-    elements.feedback.classList.add('text-danger');
-    break;
+    case 'incorrect':
+      elements.input.classList.add('is-invalid');
+      elements.feedback.classList.add('text-danger');
+      break;
 
-  case 'loading':
-    elements.submitBtn.setAttribute('disabled', true);
-    elements.input.setAttribute('readonly', true);
-    break;
+    case 'loading':
+      elements.submitBtn.setAttribute('disabled', true);
+      elements.input.setAttribute('readonly', true);
+      break;
 
-  case 'failed':
-    elements.submitBtn.removeAttribute('disabled');
-    elements.input.removeAttribute('readonly');
-    elements.feedback.classList.add('text-danger');
-    elements.input.classList.remove('is-invalid');
-    break;
+    case 'failed':
+      elements.submitBtn.removeAttribute('disabled');
+      elements.input.removeAttribute('readonly');
+      elements.feedback.classList.add('text-danger');
+      elements.input.classList.remove('is-invalid');
+      break;
 
-  default:
-    throw new Error(`Unknown form status: ${form.status}`);
+    default:
+      throw new Error(`Unknown form status: ${form.status}`);
   }
 };
 
