@@ -1,4 +1,8 @@
 ## RSS aggregator
+An application for reading RSS feeds.
+Russian, English and German are available.
+
+The application allows you to read news feeds. Supports automatic update of the list of articles.
 
 [RSS aggregator on vercel.com](https://frontend-project-lvl3-smorodinavik.vercel.app)
 

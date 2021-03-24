@@ -186,16 +186,24 @@ const renderModal = (state, elements) => {
 
     elements.modal.classList.add('show');
     elements.modal.style = 'display: block;';
-    elements.modal.role = 'dialog';
+    elements.modal.setAttribute('role', 'dialog');
+    elements.modal.setAttribute('aria-modal', true);
+    elements.modal.removeAttribute('aria-hidden');
 
     document.body.classList.add('modal-open');
+
     const divEl = document.createElement('div');
     divEl.classList.add('modal-backdrop', 'fade', 'show');
     document.body.append(divEl);
   } else {
     elements.modal.classList.remove('show');
-    document.body.classList.remove('modal-open');
+    elements.modal.removeAttribute('aria-modal');
+    elements.modal.removeAttribute('role');
+    elements.modal.setAttribute('aria-hidden', true);
     elements.modal.style = 'display: none;';
+
+    document.body.classList.remove('modal-open');
+
     const el = document.querySelector('.modal-backdrop');
     el.remove();
   }
