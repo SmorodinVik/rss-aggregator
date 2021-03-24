@@ -8,7 +8,7 @@ import initView from './view.js';
 import parser from './parser.js';
 import resources from './locales/resources.js';
 
-const loadRSS = (path) => axios.get(`https://hexlet-allorigins.herokuapp.com/get?url=${encodeURIComponent(path)}&timestamp=${new Date().getTime()}`)
+const loadRSS = (path) => axios.get(`https://hexlet-allorigins.herokuapp.com/get?disableCache=true&url=${encodeURIComponent(path)}`)
   .then((response) => response.data.contents);
 
 const loadNewPosts = (urls) => {

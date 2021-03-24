@@ -16,7 +16,7 @@ export default {
     },
     form: {
       inputPlaceholder: 'ссылка RSS',
-      submitBtn: 'Add', // 'Добавить RSS',
+      submitBtn: 'Добавить RSS',
       luckyFeedback: 'RSS успешно загружен',
       errors: {
         existingURL: 'RSS уже существует',
