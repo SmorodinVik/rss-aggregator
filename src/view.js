@@ -128,24 +128,20 @@ const renderForm = (form, elements) => {
       elements.feedback.classList.remove('text-danger');
       elements.feedback.classList.add('text-success');
       break;
-
     case 'incorrect':
       elements.input.classList.add('is-invalid');
       elements.feedback.classList.add('text-danger');
       break;
-
     case 'loading':
       elements.submitBtn.setAttribute('disabled', true);
       elements.input.setAttribute('readonly', true);
       break;
-
     case 'failed':
       elements.submitBtn.removeAttribute('disabled');
       elements.input.removeAttribute('readonly');
       elements.feedback.classList.add('text-danger');
       elements.input.classList.remove('is-invalid');
       break;
-
     default:
       throw new Error(`Unknown form status: ${form.status}`);
   }
