@@ -2,7 +2,7 @@
 [![Linter](https://github.com/SmorodinaVik/frontend-project-lvl3/actions/workflows/linter.yml/badge.svg)](https://github.com/SmorodinaVik/frontend-project-lvl3/actions/workflows/linter.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2978b3898dc19793314d/maintainability)](https://codeclimate.com/github/SmorodinaVik/frontend-project-lvl3/maintainability)
 
-### [RSS aggregator](https://frontend-project-lvl3-smorodinavik.vercel.app) is a web application for collecting and reading RSS feeds.
+### [RSS aggregator](https://smorodina-rss.vercel.app) is a web application for collecting and reading RSS feeds.
 
 - Supports automatic update of the list of articles.
 - Russian, English and German languages are available. 
@@ -28,6 +28,6 @@ http://feeds.feedburner.com/design-mania
 ```
 ---
 
-#### [RSS aggregator on vercel.com](https://frontend-project-lvl3-smorodinavik.vercel.app)
+#### [RSS aggregator on vercel.com](https://smorodina-rss.vercel.app)
 
 
