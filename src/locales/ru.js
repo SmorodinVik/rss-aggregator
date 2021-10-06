@@ -4,7 +4,7 @@ export default {
     feeds: 'Фиды',
     posts: 'Посты',
     createdBy: 'автор',
-    author: 'Виктор Смородина',
+    author: 'Виктор Смородин',
     modal: {
       viewBtn: 'Просмотр',
       readMore: 'Читать полностью',

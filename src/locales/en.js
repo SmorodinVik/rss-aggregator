@@ -4,7 +4,7 @@ export default {
     feeds: 'Feeds',
     posts: 'Posts',
     createdBy: 'created by',
-    author: 'Viktor Smorodina',
+    author: 'Viktor Smorodin',
     modal: {
       viewBtn: 'View',
       readMore: 'Read more',

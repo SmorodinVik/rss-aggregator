@@ -4,7 +4,7 @@ export default {
     feeds: 'Newsfeeds',
     posts: 'Posts',
     createdBy: 'gemacht von',
-    author: 'Wiktor Smorodina',
+    author: 'Wiktor Smorodin',
     modal: {
       viewBtn: 'Anschauen',
       readMore: 'Weiter lesen',
